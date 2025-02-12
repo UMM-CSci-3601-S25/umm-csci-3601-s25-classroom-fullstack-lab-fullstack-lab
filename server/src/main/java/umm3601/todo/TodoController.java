@@ -56,7 +56,7 @@ public class TodoController implements Controller {
   public TodoController(MongoDatabase database) {
     todoCollection = JacksonMongoCollection.builder().build(
         database,
-        "users",
+        "todos",
         Todo.class,
         UuidRepresentation.STANDARD);
   }
@@ -67,7 +67,7 @@ public class TodoController implements Controller {
    *
    * @param ctx a Javalin HTTP context
    */
-  public void getUser(Context ctx) {
+  public void getTodo(Context ctx) {
     String id = ctx.pathParam("id");
     Todo todo;
 
@@ -86,7 +86,7 @@ public class TodoController implements Controller {
 
    // @param ctx a Javalin HTTP context
 
-  public void getUsers(Context ctx) {
+  public void getTodos(Context ctx) {
     Bson combinedFilter = constructFilter(ctx);
     Bson sortingOrder = constructSortingOrder(ctx);
 
@@ -94,7 +94,7 @@ public class TodoController implements Controller {
     // database system. So MongoDB is going to find the users with the specified
     // properties, return those sorted in the specified manner, and put the
     // results into an initially empty ArrayList.
-    ArrayList<Todo> matchingUsers = todoCollection
+    ArrayList<Todo> matchingTodos = todoCollection
       .find(combinedFilter)
       .sort(sortingOrder)
       .into(new ArrayList<>());
@@ -102,7 +102,7 @@ public class TodoController implements Controller {
     // Set the JSON body of the response to be the list of users returned by the database.
     // According to the Javalin documentation (https://javalin.io/documentation#context),
     // this calls result(jsonString), and also sets content type to json
-    ctx.json(matchingUsers);
+    ctx.json(matchingTodos);
 
     // Explicitly set the context status to OK
     ctx.status(HttpStatus.OK);
@@ -161,7 +161,7 @@ public class TodoController implements Controller {
   public void addNewTodo(Context ctx) {
 
     String body = ctx.body();
-    Todo newUser = ctx.bodyValidator(Todo.class)
+    Todo newTodo = ctx.bodyValidator(Todo.class)
       .check(todo -> todo.owner != null && todo.owner.length() > 0,
         "Todo must have a non-empty todo owner; body was " + body)
       .check(todo -> todo.body != null && todo.body.length() > 0,
