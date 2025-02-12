@@ -16,7 +16,7 @@ import org.mongojack.ObjectId;
 // they will be written to by Mongo via the MongoJack
 // library. We need to suppress the Visibility Modifier
 // (https://checkstyle.sourceforge.io/config_design.html#VisibilityModifier)
-// check in CheckStyle so that we don't get a failed
+// check in CheckStyle so that we don't package umm3601.todo;
 // build when Gradle runs CheckStyle.
 @SuppressWarnings({"VisibilityModifier"})
 public class Todo {
@@ -32,7 +32,9 @@ public class Todo {
   public boolean status;
   public String body;
   public String category;
- 
+  public String limit;
+  //public String avatar;
+  //public String role;
 
   @Override
   public boolean equals(Object obj) {
@@ -60,6 +62,6 @@ public class Todo {
   // the better bet.
   @Override
   public String toString() {
-    return body;
+    return _id;
   }
 }
