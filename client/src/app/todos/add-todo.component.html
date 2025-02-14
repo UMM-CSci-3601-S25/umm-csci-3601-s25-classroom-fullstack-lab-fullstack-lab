@@ -9,11 +9,11 @@
           <div class="flex-col">
             <mat-form-field>
               <mat-label>Owner</mat-label>
-              <input matInput formControlName="Owner"
+              <input matInput formControlName="owner"
                 required>
-              @if (formControlHasError('Owner')) {
-                <mat-error data-test="OwnerError">
-                  {{getErrorMessage('Owner')}}
+              @if (formControlHasError('owner')) {
+                <mat-error data-test="ownerError">
+                  {{getErrorMessage('owner')}}
                 </mat-error>
               }
             </mat-form-field>
@@ -37,7 +37,7 @@
                   {{getErrorMessage('body')}}
                 </mat-error>
               }
-            </mat-form-field>
+
           </div>
 
         </mat-card-content>
