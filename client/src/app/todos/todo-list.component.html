@@ -83,7 +83,7 @@
                 <mat-card-content>
                   <mat-nav-list class="user-nav-list">
                     <h3 mat-subheader>Users</h3>
-                    @for (user of filteredUsers(); track user._id) {
+                    @for (user of filteredTodos(); track user._id) {
                       <a mat-list-item [routerLink]="['/users', user._id]" class="user-list-item">
                         @if (user.avatar) {
                           <img matListItemAvatar [src]="user.avatar" alt="Avatar for {{ user.name }}">
