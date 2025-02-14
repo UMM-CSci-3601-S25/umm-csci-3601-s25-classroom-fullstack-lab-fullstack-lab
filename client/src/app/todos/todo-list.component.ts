@@ -14,7 +14,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
 import { catchError, combineLatest, of, switchMap, tap } from 'rxjs';
 import { Todo } from './todo';
-// import { TodoListComponent } from './todo-list.component';
+ //import { TodoListComponent } from './todo-list.component';
 import { TodoService } from './todo.service';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 
@@ -33,23 +33,23 @@ import { toObservable, toSignal } from '@angular/core/rxjs-interop';
     MatSelectModule,
     MatOptionModule,
     MatRadioModule,
-    TodoCardComponent,
     MatListModule,
     RouterLink,
     MatButtonModule,
     MatTooltipModule,
     MatIconModule,
   ],
+
 })
 export class TodoListComponent {
-  todoOwner = signal<string | undefined>(undefined);
-  todoBody = signal<string | undefined>(undefined);
-  todoCategory = signal<string | undefined>(undefined);
-  todoStatus = signal<boolean | undefined>(undefined);
+ todoOwner = signal<string | undefined>(undefined);
+   todoBody = signal<string | undefined>(undefined);
+   todoCategory = signal<string | undefined>(undefined);
+   todoStatus = signal<boolean | undefined>(undefined);
 
-  viewType = signal<'card' | 'list'>('card');
+   viewType = signal<'card' | 'list'>('card');
 
-  errMsg = signal<string | undefined>(undefined);
+   errMsg = signal<string | undefined>(undefined);
 
 
 
