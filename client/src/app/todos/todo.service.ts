@@ -4,12 +4,9 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Todo } from './todo';
-//import { Category } from '../category-list/category';
 
-/**
- * Service that provides the interface for getting information
 
- */
+
 @Injectable({
   providedIn: 'root'
 })
@@ -23,21 +20,13 @@ export class TodoService {
   private readonly bodyKey = 'body';
 
 
-  // The private `HttpClient` is *injected* into the service
-  // by the Angular framework. This allows the system to create
-  // only one `HttpClient` and share that across all services
-  // that need it, and it allows us to inject a mock version
-  // of `HttpClient` in the unit tests so they don't have to
-  // make "real" HTTP calls to a server that might not exist or
-  // might not be currently running.
+
   constructor(private httpClient: HttpClient) {
   }
 
 
   getTodos(filters?: { owner?: string; status?: boolean; body?: string; category?: string }): Observable<Todo[]> {
-    // `HttpParams` is essentially just a map used to hold key-value
-    // pairs that are then encoded as "?key1=value1&key2=value2&…" in
-    // the URL when we make the call to `.get()` below.
+
     let httpParams: HttpParams = new HttpParams();
     if (filters) {
       if (filters.owner) {
