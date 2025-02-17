@@ -17,7 +17,7 @@ export class TodoService {
   private readonly categoryKey = 'category';
   private readonly ownerKey = 'owner';
   private readonly statusKey = 'status';
-  private readonly bodyKey = 'body';
+
 
 
 
@@ -25,12 +25,12 @@ export class TodoService {
   }
 
 
-  getTodos(filters?: { owner?: string; status?: boolean; body?: string; category?: string }): Observable<Todo[]> {
+  getTodos(filters?: { owner?: string; status?: boolean; category?: string }): Observable<Todo[]> {
 
     let httpParams: HttpParams = new HttpParams();
     if (filters) {
       if (filters.owner) {
-        httpParams = httpParams.set(this.categoryKey, filters.owner);
+        httpParams = httpParams.set(this.ownerKey, filters.owner);
       }
       if (filters.status) {
         httpParams = httpParams.set(this.statusKey, filters.status);
@@ -38,9 +38,7 @@ export class TodoService {
       if (filters.category) {
         httpParams = httpParams.set(this.categoryKey, filters.category);
       }
-      if (filters.body) {
-        httpParams = httpParams.set(this.bodyKey, filters.body);
-      }
+
     }
     // Send the HTTP GET request with the given URL and parameters.
 

@@ -47,14 +47,4 @@ export class MockTodoService extends TodoService {
   }
 
 
-  getTodosById(id: string): Observable<Todo> {
-
-    if (id === MockTodoService.testTodos[0]._id) {
-      return of(MockTodoService.testTodos[0]);
-    } else if (id === MockTodoService.testTodos[1]._id) {
-      return of(MockTodoService.testTodos[1]);
-    } else {
-      return of(null);
-    }
-  }
 }
