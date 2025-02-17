@@ -42,6 +42,7 @@ import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 
 })
 export class TodoListComponent {
+
  todoOwner = signal<string | undefined>(undefined);
    todoBody = signal<string | undefined>(undefined);
    todoCategory = signal<string | undefined>(undefined);
@@ -61,7 +62,6 @@ export class TodoListComponent {
     private todoCategory$ = toObservable(this.todoCategory);
 
 
-
     serverFilteredTodos =
 
       toSignal(
@@ -75,11 +75,8 @@ export class TodoListComponent {
           ),
 
           catchError((err) => {
-            if (err.error instanceof ErrorEvent) {
-              this.errMsg.set(
-                `Problem in the client – Error: ${err.error.message}`
-              );
-            } else {
+            if (!(err.error instanceof ErrorEvent)) {
+
               this.errMsg.set(
                 `Problem contacting the server – Error Code: ${err.status}\nMessage: ${err.message}`
               );
@@ -100,6 +97,7 @@ export class TodoListComponent {
       return this.todoService.filterTodos(serverFilteredTodos, {
         category: this.todoCategory(),
         owner: this.todoOwner(),
+        body: this.todoBody(),
       });
     });
   }

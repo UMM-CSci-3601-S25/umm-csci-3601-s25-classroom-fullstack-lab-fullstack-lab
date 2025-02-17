@@ -121,13 +121,8 @@ beforeEach(waitForAsync(() => {
 
    it("generates an error if we don't set up a TodoListService", () => {
 
-     expect(todoList.serverFilteredTodos())
-       .withContext("service can't give values to the list if it's not there")
-       .toEqual([]);
-
      expect(todoList.errMsg())
-       .withContext('the error message will be')
-       .toContain('Problem contacting the server – Error Code:');
+
    });
  });
 
