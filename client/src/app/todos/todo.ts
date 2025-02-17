@@ -1,11 +1,8 @@
-export interface User {
+export interface Todo {
   _id: string;
-  name: string;
-  age: number;
-  company: string;
-  email: string;
-  avatar?: string;
-  role: UserRole;
+  category: string;
+  description?: string;
+  completed: boolean;
 }
 
-export type UserRole = 'admin' | 'editor' | 'viewer';
+export type TodoCategory = 'software design' | 'video games' | 'homework' | 'groceries';
