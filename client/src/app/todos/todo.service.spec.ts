@@ -1,7 +1,7 @@
-import { HttpClient, HttpParams, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { TestBed, waitForAsync } from '@angular/core/testing';
-import { of } from 'rxjs';
+import { TestBed} from '@angular/core/testing';
+//import { of } from 'rxjs';
 import { Todo } from './todo';
 import { TodoService } from './todo.service';
 
@@ -64,18 +64,18 @@ describe('TodoService', () => {
     });
 
 
-    describe('filterTodosByStatus', () => {
+    describe('filter Todos By Status', () => {
 
       it('filters by status', () => {
 
         const todoStatus = true;
-        const filteredTodos = todoService.filterTodosByStatus(testTodos, {status: todoStatus });
+        const filteredTodos = todoService.filterTodos(testTodos, { status: todoStatus });
 
         expect(filteredTodos.length).toBe(2);
 
         filteredTodos.forEach(todo => {
-          expect(todo.status.indexOf(todoStatus)).toBeGreaterThanOrEqual(0);
-
+          expect(todo.status).toBe(todoStatus);
+          
       });
 
     });

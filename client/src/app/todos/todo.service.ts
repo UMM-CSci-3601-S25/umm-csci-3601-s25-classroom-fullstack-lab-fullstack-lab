@@ -1,34 +1,48 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+//import { Observable } from 'rxjs';
+//import { map } from 'rxjs/operators';
 import { Todo, TodoCategory } from './todo';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class TodoService {
 
-
-  //filter method that takes todos and returns them by status
-
-  filterTodosByStatus(todos: Todo[], status: boolean): Todo[] {
-    return todos.filter(todo => todo.status === status);
+  constructor(private httpClient: HttpClient) {
   }
 
 
-  //filter method that takes todos and returns them by category
+    filterTodos(todos: Todo[], filters: { status?: boolean; owner?: string; category?: TodoCategory; body?: string; }): Todo[] { // skipcq: JS-0105
+      let filteredTodos = todos;
+
+      // filter by status
+      if (filters.status !== undefined) {
+        filteredTodos = filteredTodos.filter(todo => todo.status === filters.status);
+      }
+
+
+      // filter by owner
 
 
 
 
-  //filter method that takes todos and returns them by owner
+      // filter by category
 
 
 
 
-  // filter method that takes todos and returns them by body
+      // filter by body
+
+
+
+
+
+      return filteredTodos;
+    }
+
+
 
 
 
