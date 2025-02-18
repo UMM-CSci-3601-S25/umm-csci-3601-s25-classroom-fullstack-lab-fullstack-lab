@@ -68,6 +68,7 @@ export class TodoService {
       params: httpParams,
     });
   }
+}
 
   /**
    * Get the `Todo` with the specified ID.
@@ -77,7 +78,7 @@ export class TodoService {
    */
   getTodoById(id: string): Observable<Todo> {
     // The input to get could also be written as (this.todoUrl + '/' + id)
-    return this.httpClient.get<Todo>(this.todoUrl + '/' + id),
+    return this.httpClient.get<Todo>(this.todoUrl + '/' + id);
   }
 
   /**
