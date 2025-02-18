@@ -22,7 +22,7 @@ describe('Todo list', () => {
     page.getTodoListItems().should('have.length', 10);
   });
 
-  it('Should type something in the name filter and check that it returned correct elements', () => {
+  it('Should type something in the owner filter and check that it returned correct elements', () => {
     // Filter for todo 'Fry'
     cy.get('[data-test=todoOwnerInput]').type('Fry');
 

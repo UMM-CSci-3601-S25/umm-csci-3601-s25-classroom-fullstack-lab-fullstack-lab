@@ -20,14 +20,11 @@ import { TodoService } from './todo.service';
 export class AddTodoComponent {
 
   addTodoForm = new FormGroup({
-    // We allow alphanumeric input and limit the length for name.
-    name: new FormControl('', Validators.compose([
+
+    owner: new FormControl('', Validators.compose([
       Validators.required,
       Validators.minLength(2),
-      // In the real world you'd want to be very careful about having
-      // an upper limit like this because people can sometimes have
-      // very long names. This demonstrates that it's possible, though,
-      // to have maximum length limits.
+
       Validators.maxLength(50),
 
     ])),
@@ -86,14 +83,14 @@ export class AddTodoComponent {
     private router: Router) {
   }
 
-  formControlHasError(controlName: string): boolean {
-    return this.addTodoForm.get(controlName).invalid &&
-      (this.addTodoForm.get(controlName).dirty || this.addTodoForm.get(controlName).touched);
+  formControlHasError(controlowner: string): boolean {
+    return this.addTodoForm.get(controlOwner).invalid &&
+      (this.addTodoForm.get(controlOwner).dirty || this.addTodoForm.get(controlOwner).touched);
   }
 
-  getErrorMessage(name: keyof typeof this.addTodoValidationMessages): string {
-    for(const {type, message} of this.addTodoValidationMessages[name]) {
-      if (this.addTodoForm.get(name).hasError(type)) {
+  getErrorMessage(owner: keyof typeof this.addTodoValidationMessages): string {
+    for(const {type, message} of this.addTodoValidationMessages[owner]) {
+      if (this.addTodoForm.get(owner).hasError(type)) {
         return message;
       }
     }
@@ -104,7 +101,7 @@ export class AddTodoComponent {
     this.todoService.addTodo(this.addTodoForm.value).subscribe({
       next: (newId) => {
         this.snackBar.open(
-          `Added todo ${this.addTodoForm.value.name}`,
+          `Added todo ${this.addTodoForm.value.owner}`,
           null,
           { duration: 2000 }
         );

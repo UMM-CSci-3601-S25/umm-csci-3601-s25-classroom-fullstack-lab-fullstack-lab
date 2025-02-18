@@ -15,7 +15,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
-import { Observable } from 'rxjs';
+//import { Observable } from 'rxjs';
 import { MockTodoService } from '../../testing/todo.service.mock';
 import { Todo } from './todo';
 import { TodoListComponent } from './todo-list.component';
@@ -85,47 +85,57 @@ beforeEach(waitForAsync(() => {
     ).toBe(false);
   });
 
- describe('Misbehaving Todo List', () => {
-   let todoList: TodoListComponent;
-   let fixture: ComponentFixture<TodoListComponent>;
+  it("doesn't contain a todo owner named 'Money'", () => {
+    expect(
+      todoList.serverFilteredTodos().some((todo: Todo) => todo.owner === 'Money')
+    ).toBe(false);
+  });
 
-   let todoServiceStub: {
-     getTodos: () => Observable<Todo[]>;
-     filterTodos: () => Todo[];
-   };
+//  describe('Misbehaving Todo List', () => {
+//    let todoList: TodoListComponent;
+//    let fixture: ComponentFixture<TodoListComponent>;
 
-   beforeEach(() => {
-     todoServiceStub = {
-       getTodos: () =>
-         new Observable((observer) => {
-           observer.error('getTodos() Observer generates an error');
-         }),
-       filterTodos: () => []
-     };
+//    let todoServiceStub: {
+//      getTodos: () => Observable<Todo[]>;
+//      filterTodos: () => Todo[];
+//    };
 
-     TestBed.configureTestingModule({
-       imports: [COMMON_IMPORTS, TodoListComponent],
+//    beforeEach(() => {
+//      todoServiceStub = {
+//        getTodos: () =>
+//          new Observable((observer) => {
+//            observer.error('getTodos() Observer generates an error');
+//          }),
+//        filterTodos: () => []
+//      };
 
-       providers: [{ provide: TodoService, useValue: todoServiceStub }],
-     });
-   });
+//      TestBed.configureTestingModule({
+//        imports: [COMMON_IMPORTS, TodoListComponent],
+
+//        providers: [{ provide: TodoService, useValue: todoServiceStub }],
+//      });
+//    });
 
 
-   beforeEach(waitForAsync(() => {
-     TestBed.compileComponents().then(() => {
-       fixture = TestBed.createComponent(TodoListComponent);
-       todoList = fixture.componentInstance;
-       fixture.detectChanges();
-     });
-   }));
+//    beforeEach(waitForAsync(() => {
+//      TestBed.compileComponents().then(() => {
+//        fixture = TestBed.createComponent(TodoListComponent);
+//        todoList = fixture.componentInstance;
+//        fixture.detectChanges();
+//      });
+//    }));
 
-   it("generates an error if we don't set up a TodoListService", () => {
+//    it("generates an error if we don't set up a TodoListService", () => {
 
-     expect(todoList.errMsg())
+//     expect(todoList.serverFilteredTodos())
+//       .withContext("service can't give values to the list if it's not there")
+//       .toEqual([]);
 
-   });
+//     expect(todoList.errMsg())
+//       .withContext('the error message will be')
+//       .toContain('Problem contacting the server – Error Code:');
+//   });
+//  });
  });
-
-});
 
 

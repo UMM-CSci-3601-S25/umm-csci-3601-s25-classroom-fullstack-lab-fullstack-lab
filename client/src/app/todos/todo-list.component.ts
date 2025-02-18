@@ -92,13 +92,12 @@ export class TodoListComponent {
       );
 
 
-    filteredTodos = computed(() => {
-      const serverFilteredTodos = this.serverFilteredTodos();
-      return this.todoService.filterTodos(serverFilteredTodos, {
-        category: this.todoCategory(),
-        owner: this.todoOwner(),
-        body: this.todoBody(),
+      filteredTodos = computed(() => {
+        const serverFilteredTodos = this.serverFilteredTodos();
+        return this.todoService.filterTodos(serverFilteredTodos, {
+          owner: this.todoOwner(),
+          category: this.todoCategory(),
+        });
       });
-    });
   }
 
