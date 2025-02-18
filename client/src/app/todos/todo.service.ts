@@ -40,7 +40,6 @@ export class TodoService {
       }
 
     }
-    // Send the HTTP GET request with the given URL and parameters.
 
     return this.httpClient.get<Todo[]>(this.todoUrl, {
       params: httpParams,

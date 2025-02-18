@@ -6,6 +6,7 @@ export class TodoListPage {
   private readonly todoCardSelector = '.todo-cards-container app-todo-card';
   private readonly todoListItemsSelector = '.todo-nav-list .todo-list-item';
   private readonly profileButtonSelector = '[data-test=viewProfileButton]';
+  private readonly todoOwnerInput = '[data-test=todoOwnerInput]';
   private readonly radioButtonSelector = '[data-test=viewTypeRadio] mat-radio-button';
   private readonly todoRoleDropdownSelector = '[data-test=todoRoleSelect]';
   private readonly dropdownOptionSelector = 'mat-option';
