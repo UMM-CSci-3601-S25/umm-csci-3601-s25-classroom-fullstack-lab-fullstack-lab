@@ -6,7 +6,7 @@ import static com.mongodb.client.model.Filters.regex;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+//import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -84,17 +84,17 @@ public class TodoController implements Controller {
    */
   public void getTodo(Context ctx) {
     String id = ctx.pathParam("id");
-    Todo Todo;
+    Todo todo;
 
     try {
-      Todo = todoCollection.find(eq("_id", new ObjectId(id))).first();
+      todo = todoCollection.find(eq("_id", new ObjectId(id))).first();
     } catch (IllegalArgumentException e) {
       throw new BadRequestResponse("The requested Todo id wasn't a legal Mongo Object ID.");
     }
-    if (Todo == null) {
+    if (todo == null) {
       throw new NotFoundResponse("The requested Todo was not found");
     } else {
-      ctx.json(Todo);
+      ctx.json(todo);
       ctx.status(HttpStatus.OK);
     }
   }
@@ -149,7 +149,7 @@ public class TodoController implements Controller {
       } else if (statusParam.equalsIgnoreCase("incomplete") || statusParam.equalsIgnoreCase("false")) {
       targetStatus = false;
       } else {
-      throw new BadRequestResponse("Todo status must be 'complete', 'incomplete', 'true', or 'false'"); // throws an error if the status is not complete or incomplete
+      throw new BadRequestResponse("Todo status must be 'complete', 'incomplete', 'true', or 'false'");
       }
       filters.add(eq(STATUS_KEY, targetStatus));
     }
@@ -181,7 +181,7 @@ public class TodoController implements Controller {
     // returns error if category does not exist
     if (ctx.queryParamMap().containsKey(CATEGORY_KEY)) {
       String category = ctx.queryParamAsClass(CATEGORY_KEY, String.class)
-        .check(it -> it.matches(CATEGORY_REGEX), "Todo must have a legal Todo category") // error message, want to see if i can use this code in other parts of the code
+        .check(it -> it.matches(CATEGORY_REGEX), "Todo must have a legal Todo category")
         .get();
       filters.add(eq(CATEGORY_KEY, category));
     }

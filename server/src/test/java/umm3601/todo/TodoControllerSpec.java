@@ -1,9 +1,9 @@
 package umm3601.todo;
 
-import static com.mongodb.client.model.Filters.eq;
+//import static com.mongodb.client.model.Filters.eq;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+//import static org.junit.jupiter.api.Assertions.assertNotEquals;
+//import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -43,7 +43,7 @@ import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
 import io.javalin.http.NotFoundResponse;
-import io.javalin.json.JavalinJackson;
+//import io.javalin.json.JavalinJackson;
 
 
 /**
@@ -69,7 +69,7 @@ class TodoControllerSpec {
   private ObjectId samsId;
   private static MongoClient mongoClient;
   private static MongoDatabase db;
-  private static JavalinJackson javalinJackson = new JavalinJackson();
+  //private static JavalinJackson javalinJackson = new JavalinJackson();
 
   @Mock
   private Context ctx;
@@ -229,119 +229,6 @@ class TodoControllerSpec {
     }
   }
 
-
-
-
-
-
-  //############# DOES NOT WORK ##########################################################################
-
-
-
-//  @Test
-//  void respondsAppropriatelyToNonBooleanStatus() {
-//    Map<String, List<String>> queryParams = new HashMap<>();
-//    String illegalBooleanString = "not  aboolean";
-//    queryParams.put(TodoController.STATUS_KEY, Arrays.asList(new String[] {illegalBooleanString}));
-//    when(ctx.queryParamMap()).thenReturn(queryParams);
-//    when(ctx.queryParam(TodoController.STATUS_KEY)).thenReturn(illegalBooleanString);
-//
-//    ValidationException exception = assertThrows(ValidationException.class, () -> {
-//      todoController.getTodos(ctx);
-//    });
-//    Exception exceptionCause = exception.getErrors().get(TodoController.STATUS_KEY).get(0).exception();
-//    assertEquals(IllegalArgumentException.class, exceptionCause.getClass());
-//    assertTrue(exceptionCause.getMessage().contains(illegalBooleanString));
-//  }
-
-
-
-
-  //error message:
-
-  //  org.opentest4j.AssertionFailedError: Unexpected exception type thrown, expected: <io.javalin.validation.ValidationException> but was: <io.javalin.http.BadRequestResponse>
-  //	at app//org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
-  //	at app//org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:67)
-  //	at app//org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
-  //	at app//org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)
-  //	at app//umm3601.todo.TodoControllerSpec.respondsAppropriatelyToNonBooleanStatus(TodoControllerSpec.java:241)
-  //	at java.base@21.0.6/java.lang.reflect.Method.invoke(Method.java:580)
-  //	at java.base@21.0.6/java.util.ArrayList.forEach(ArrayList.java:1596)
-  //	at java.base@21.0.6/java.util.ArrayList.forEach(ArrayList.java:1596)
-  //Caused by: io.javalin.http.BadRequestResponse: Todo status must be 'complete', 'incomplete', 'true', or 'false'
-  //	at app//umm3601.todo.TodoController.constructFilter(TodoController.java:152)
-  //	at app//umm3601.todo.TodoController.getTodos(TodoController.java:109)
-  //	at app//umm3601.todo.TodoControllerSpec.lambda$respondsAppropriatelyToNonBooleanStatus$1(TodoControllerSpec.java:242)
-  //	at app//org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:53)
-  //	... 6 more
-
-
-
-  //############# DOES NOT WORK ##########################################################################
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//  //############# DOES NOT WORK ##########################################################################
-//  @Test
-//  void canGetTodosWithCategory() throws IOException {
-//    Map<String, List<String>> queryParams = new HashMap<>();
-//    queryParams.put(TodoController.CATEGORY_KEY, Arrays.asList(new String[] {"software design"}));
-//    when(ctx.queryParamMap()).thenReturn(queryParams);
-//    when(ctx.queryParam(TodoController.CATEGORY_KEY)).thenReturn("software design");
-//
-//    todoController.getTodos(ctx);
-//
-//    verify(ctx).json(todoArrayListCaptor.capture());
-//    verify(ctx).status(HttpStatus.OK);
-//
-//    for (Todo todo : todoArrayListCaptor.getValue()) {
-//      assertEquals("software design", todo.category);
-//    }
-//  }
-//
-
-
-
-
-
-// error message:
-
-//  java.lang.NullPointerException: Cannot invoke "io.javalin.validation.Validator.check(kotlin.jvm.functions.Function1, String)" because the return value of "io.javalin.http.Context.queryParamAsClass(String, java.lang.Class)" is null
-//	at umm3601.todo.TodoController.constructFilter(TodoController.java:184)
-//	at umm3601.todo.TodoController.getTodos(TodoController.java:109)
-//	at umm3601.todo.TodoControllerSpec.canGetTodosWithCategory(TodoControllerSpec.java:250)
-//	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-//	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-//	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-//
-
-
-  //############# DOES NOT WORK ##########################################################################
-
-
-
-
-
-
-
-
-
-
-
-  // this code is originally edited from the UserControllerSpec.java file.
 
 
 
