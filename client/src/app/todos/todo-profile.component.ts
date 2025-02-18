@@ -3,7 +3,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { catchError, map, switchMap } from 'rxjs/operators';
-// import { Todo } from './todo';
 import { TodoCardComponent } from './todo-card.component';
 import { TodoService } from './todo.service';
 import { toSignal } from '@angular/core/rxjs-interop';

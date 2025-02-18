@@ -9,31 +9,25 @@ describe('TodoService', () => {
   // A small collection of test todos
   const testTodos: Todo[] = [
     {
-      _id: 'chris_id',
-      name: 'Chris',
-      age: 25,
-      company: 'UMM',
-      email: 'chris@this.that',
-      role: 'admin',
-      avatar: 'https://gravatar.com/avatar/8c9616d6cc5de638ea6920fb5d65fc6c?d=identicon'
+      _id: "58af3a600343927e48e8720f",
+      owner: 'Blanche',
+      status: false,
+      body: 'In sunt ex non tempor cillum commodo amet incididunt anim qui commodo quis',
+      category: 'software design'
     },
     {
-      _id: 'pat_id',
-      name: 'Pat',
-      age: 37,
-      company: 'IBM',
-      email: 'pat@something.com',
-      role: 'editor',
-      avatar: 'https://gravatar.com/avatar/b42a11826c3bde672bce7e06ad729d44?d=identicon'
+      _id: '58af3a600343927e48e87210',
+      owner: 'Fry',
+      status: false,
+      body: 'Ipsum esse est ullamco magna tempor anim laborum non officia deserunt veniam commodo',
+      category: 'video games'
     },
     {
-      _id: 'jamie_id',
-      name: 'Jamie',
-      age: 37,
-      company: 'Frogs, Inc.',
-      email: 'jamie@frogs.com',
-      role: 'viewer',
-      avatar: 'https://gravatar.com/avatar/d4a6c71dd9470ad4cf58f78c100258bf?d=identicon'
+      _id: '58af3a600343927e48e87214',
+      owner: 'barry',
+      status: true,
+      body: 'Nisi sit non non sunt veniam pariatur',
+      category: 'video games'
     }
   ];
   let todoService: TodoService;
@@ -127,48 +121,47 @@ describe('TodoService', () => {
     * about the returned value).
     */
 
-    it('correctly calls api/todos with filter parameter \'admin\'', () => {
+    it('correctly calls api/todos with filter parameter \'home work\'', () => {
         const mockedMethod = spyOn(httpClient, 'get').and.returnValue(of(testTodos));
 
-        todoService.getTodos({ role: 'admin' }).subscribe(() => {
+        todoService.getTodos({ category: 'home work' }).subscribe(() => {
           expect(mockedMethod)
             .withContext('one call')
             .toHaveBeenCalledTimes(1);
           // The mocked method should have been called with two arguments:
           //   * the appropriate URL ('/api/todos' defined in the `TodoService`)
-          //   * An options object containing an `HttpParams` with the `role`:`admin`
+          //   * An options object containing an `HttpParams` with the `body`:`admin`
           //     key-value pair.
           expect(mockedMethod)
             .withContext('talks to the correct endpoint')
-            .toHaveBeenCalledWith(todoService.todoUrl, { params: new HttpParams().set('role', 'admin') });
+            .toHaveBeenCalledWith(todoService.todoUrl, { params: new HttpParams().set('category', 'home work') });
         });
     });
 
-    it('correctly calls api/todos with filter parameter \'age\'', () => {
+    it('correctly calls api/todos with filter parameter \'false\'', () => {
       const mockedMethod = spyOn(httpClient, 'get').and.returnValue(of(testTodos));
 
-      todoService.getTodos({ age: 25 }).subscribe(() => {
+      todoService.getTodos({ status: false }).subscribe(() => {
         expect(mockedMethod)
           .withContext('one call')
           .toHaveBeenCalledTimes(1);
         expect(mockedMethod)
           .withContext('talks to the correct endpoint')
-          .toHaveBeenCalledWith(todoService.todoUrl, { params: new HttpParams().set('age', '25') });
+          .toHaveBeenCalledWith(todoService.todoUrl, { params: new HttpParams().set('status', false) });
       });
     });
 
     it('correctly calls api/todos with multiple filter parameters', () => {
         const mockedMethod = spyOn(httpClient, 'get').and.returnValue(of(testTodos));
 
-        todoService.getTodos({ role: 'editor', company: 'IBM', age: 37 }).subscribe(() => {
+        todoService.getTodos({ category: 'home work', status: false }).subscribe(() => {
           // This test checks that the call to `todoService.getTodos()` does several things:
           //   * It calls the mocked method (`HttpClient#get()`) exactly once.
           //   * It calls it with the correct endpoint (`todoService.todoUrl`).
           //   * It calls it with the correct parameters:
           //      * There should be three parameters (this makes sure that there aren't extras).
-          //      * There should be a "role:editor" key-value pair.
-          //      * And a "company:IBM" pair.
-          //      * And a "age:37" pair.
+          //      * There should be a "category:home work" key-value pair.
+          //      * And a "status:false" pair.
 
           // This gets the arguments for the first (and in this case only) call to the `mockMethod`.
           const [url, options] = mockedMethod.calls.argsFor(0);
@@ -184,17 +177,14 @@ describe('TodoService', () => {
             .withContext('talks to the correct endpoint')
             .toEqual(todoService.todoUrl);
           expect(calledHttpParams.keys().length)
-            .withContext('should have 3 params')
-            .toEqual(3);
-          expect(calledHttpParams.get('role'))
-            .withContext('role of editor')
-            .toEqual('editor');
-          expect(calledHttpParams.get('company'))
-            .withContext('company being IBM')
-            .toEqual('IBM');
-          expect(calledHttpParams.get('age'))
-            .withContext('age being 37')
-            .toEqual('37');
+            .withContext('should have 2 params')
+            .toEqual(2);
+          expect(calledHttpParams.get('category'))
+            .withContext('category of home work')
+            .toEqual('home work');
+          expect(calledHttpParams.get('status'))
+            .withContext('status being false')
+            .toEqual('false');
         });
     });
   });
@@ -253,48 +243,37 @@ describe('TodoService', () => {
      * though, we don't have to use the mock HttpClient and
      * all those complications.
      */
-    it('filters by name', () => {
-      const todoName = 'i';
-      const filteredTodos = todoService.filterTodos(testTodos, { name: todoName });
+    it('filters by owner', () => {
+      const todoOwner = 'i';
+      const filteredTodos = todoService.filterTodos(testTodos, { owner: todoOwner });
       // There should be two todos with an 'i' in their
-      // name: Chris and Jamie.
+      // owner: Chris and Jamie.
       expect(filteredTodos.length).toBe(2);
-      // Every returned todo's name should contain an 'i'.
+      // Every returned todo's owner should contain an 'i'.
       filteredTodos.forEach(todo => {
-        expect(todo.name.indexOf(todoName)).toBeGreaterThanOrEqual(0);
+        expect(todo.owner.indexOf(todoOwner)).toBeGreaterThanOrEqual(0);
       });
     });
 
-    it('filters by company', () => {
-      const todoCompany = 'UMM';
-      const filteredTodos = todoService.filterTodos(testTodos, { company: todoCompany });
-      // There should be just one todo that has UMM as their company.
-      expect(filteredTodos.length).toBe(1);
-      // Every returned todo's company should contain 'UMM'.
-      filteredTodos.forEach(todo => {
-        expect(todo.company.indexOf(todoCompany)).toBeGreaterThanOrEqual(0);
-      });
-    });
-
-    it('filters by name and company', () => {
-      // There's only one todo (Chris) whose name
-      // contains an 'i' and whose company contains
-      // an 'M'. There are two whose name contains
-      // an 'i' and two whose company contains an
-      // an 'M', so this should test combined filtering.
-      const todoName = 'i';
-      const todoCompany = 'M';
-      const filters = { name: todoName, company: todoCompany };
-      const filteredTodos = todoService.filterTodos(testTodos, filters);
-      // There should be just one todo with these properties.
-      expect(filteredTodos.length).toBe(1);
-      // Every returned todo should have _both_ these properties.
-      filteredTodos.forEach(todo => {
-        expect(todo.name.indexOf(todoName)).toBeGreaterThanOrEqual(0);
-        expect(todo.company.indexOf(todoCompany)).toBeGreaterThanOrEqual(0);
-      });
-    });
-  });
+  //   it('filters by owner and company', () => {
+  //     // There's only one todo (Chris) whose owner
+  //     // contains an 'i' and whose company contains
+  //     // an 'M'. There are two whose owner contains
+  //     // an 'i' and two whose company contains an
+  //     // an 'M', so this should test combined filtering.
+  //     const todoOwner = 'i';
+  //     const todoCompany = 'M';
+  //     const filters = { owner: todoOwner, company: todoCompany };
+  //     const filteredTodos = todoService.filterTodos(testTodos, filters);
+  //     // There should be just one todo with these properties.
+  //     expect(filteredTodos.length).toBe(1);
+  //     // Every returned todo should have _both_ these properties.
+  //     filteredTodos.forEach(todo => {
+  //       expect(todo.owner.indexOf(todoOwner)).toBeGreaterThanOrEqual(0);
+  //       expect(todo.company.indexOf(todoCompany)).toBeGreaterThanOrEqual(0);
+  //     });
+  //   });
+  // });
 
   describe('Adding a todo using `addTodo()`', () => {
     it('talks to the right endpoint and is called once', waitForAsync(() => {
@@ -319,3 +298,4 @@ describe('TodoService', () => {
     }));
   });
 });
+})

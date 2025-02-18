@@ -13,7 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
 import { catchError, combineLatest, of, switchMap, tap } from 'rxjs';
-import { Todo, TodoRole } from './todo';
+import { Todo, TodoCategory } from './todo';
 import { TodoCardComponent } from './todo-card.component';
 import { TodoService } from './todo.service';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
@@ -50,10 +50,10 @@ import { toObservable, toSignal } from '@angular/core/rxjs-interop';
   ],
 })
 export class TodoListComponent {
-  todoName = signal<string | undefined>(undefined);
-  todoAge = signal<number | undefined>(undefined);
-  todoRole = signal<TodoRole | undefined>(undefined);
-  todoCompany = signal<string | undefined>(undefined);
+  todoOwner = signal<string | undefined>(undefined);
+  todoStatus = signal<boolean | false>(false);
+  todoCategory = signal<TodoCategory | undefined>(undefined);
+  todoBody = signal<string | undefined>(undefined);
 
   viewType = signal<'card' | 'list'>('card');
 
@@ -77,8 +77,8 @@ export class TodoListComponent {
   // text fields change we want to re-run the filtering. That means we have to convert both
   // of those _signals_ to _observables_ using `toObservable()`. Those are then used in the
   // definition of `serverFilteredTodos` below to trigger updates to the `Observable` there.
-  private todoRole$ = toObservable(this.todoRole);
-  private todoAge$ = toObservable(this.todoAge);
+  private todoCategory$ = toObservable(this.todoCategory);
+  private todoStatus$ = toObservable(this.todoStatus);
 
   // We ultimately `toSignal` this to be able to access it synchronously, but we do all the RXJS operations
   // "inside" the `toSignal()` call processing and transforming the observables there.
@@ -89,14 +89,14 @@ export class TodoListComponent {
     // the corresponding `todoRole$` and/or `todoAge$` observables to change, which will cause `combineLatest()`
     // to send a new pair down the pipe.
     toSignal(
-      combineLatest([this.todoRole$, this.todoAge$]).pipe(
+      combineLatest([this.todoCategory$, this.todoStatus$]).pipe(
         // `switchMap` maps from one observable to another. In this case, we're taking `role` and `age` and passing
         // them as arguments to `todoService.getTodos()`, which then returns a new observable that contains the
         // results.
-        switchMap(([role, age]) =>
+        switchMap(([category, status]) =>
           this.todoService.getTodos({
-            role,
-            age,
+            category,
+            status,
           })
         ),
         // `catchError` is used to handle errors that might occur in the pipeline. In this case `todoService.getTodos()`
@@ -137,8 +137,7 @@ export class TodoListComponent {
   filteredTodos = computed(() => {
     const serverFilteredTodos = this.serverFilteredTodos();
     return this.todoService.filterTodos(serverFilteredTodos, {
-      name: this.todoName(),
-      company: this.todoCompany(),
+      owner: this.todoOwner(),
     });
   });
 }

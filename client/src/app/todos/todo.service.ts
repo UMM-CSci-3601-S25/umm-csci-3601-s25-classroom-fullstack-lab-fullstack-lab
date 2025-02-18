@@ -46,7 +46,7 @@ export class TodoService {
    *  from the server after a possibly substantial delay (because we're
    *  contacting a remote server over the Internet).
    */
-  getTodos(filters?: { status?: boolean; owner?: string; category?: string }): Observable<Todo[]> {
+  getTodos(filters?: { status?: boolean; owner?: string; category?: string; body?: string }): Observable<Todo[]> {
     // `HttpParams` is essentially just a map used to hold key-value
     // pairs that are then encoded as "?key1=value1&key2=value2&…" in
     // the URL when we make the call to `.get()` below.

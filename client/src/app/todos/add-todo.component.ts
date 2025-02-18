@@ -8,7 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { TodoRole } from './todo';
+import { TodoCategory } from './todo';
 import { TodoService } from './todo.service';
 
 @Component({
@@ -60,9 +60,9 @@ export class AddTodoComponent {
       Validators.email,
     ])),
 
-    role: new FormControl<TodoRole>('viewer', Validators.compose([
+    role: new FormControl<TodoCategory>('groceries', Validators.compose([
       Validators.required,
-      Validators.pattern('^(admin|editor|viewer)$'),
+      Validators.pattern('^(home work|video games|software design|groceries)$'),
     ])),
   });
 
@@ -70,28 +70,25 @@ export class AddTodoComponent {
   // We can only display one error at a time,
   // the order the messages are defined in is the order they will display in.
   readonly addTodoValidationMessages = {
-    name: [
-      {type: 'required', message: 'Name is required'},
-      {type: 'minlength', message: 'Name must be at least 2 characters long'},
-      {type: 'maxlength', message: 'Name cannot be more than 50 characters long'},
-      {type: 'existingName', message: 'Name has already been taken'}
+    Owner: [
+      {type: 'required', message: 'Owner is required'},
+      {type: 'minlength', message: 'Owner must be at least 2 characters long'},
+      {type: 'maxlength', message: 'Owner cannot be more than 50 characters long'},
+      {type: 'existingOwner', message: 'Owner has already been taken'}
     ],
 
-    age: [
-      {type: 'required', message: 'Age is required'},
-      {type: 'min', message: 'Age must be at least 15'},
-      {type: 'max', message: 'Age may not be greater than 200'},
-      {type: 'pattern', message: 'Age must be a whole number'}
+    status: [
+      {type: 'required', message: 'Status is required'},
+      {type: 'pattern', message: 'Status must be true or false'}
     ],
 
-    email: [
-      {type: 'email', message: 'Email must be formatted properly'},
-      {type: 'required', message: 'Email is required'}
+    body: [
+      {type: 'required', message: 'Body is required'}
     ],
 
-    role: [
-      { type: 'required', message: 'Role is required' },
-      { type: 'pattern', message: 'Role must be Admin, Editor, or Viewer' },
+    Category: [
+      { type: 'required', message: 'Category is required' },
+      { type: 'pattern', message: 'Category must be Home Work, Video games, Software Design, or Groceries' },
     ]
   };
 

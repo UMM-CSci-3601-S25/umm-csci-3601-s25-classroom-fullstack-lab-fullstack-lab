@@ -11,40 +11,34 @@
           <!-- Examples of filtering in Angular -->
 
           <mat-form-field class="input-field">
-            <mat-label>Name</mat-label>
+            <mat-label>Owner</mat-label>
             <!-- As opposed to the RXJS version `[ngModel]="todoName$ | async" (ngModelChange)="todoName$.next($event)" -->
             <!-- Signals are their own getter and setter if left uninvoked like that -->
             <!-- The [()] syntax is saying 'Do both the getting and setting with the respective get/set of the signal' -->
-            <input matInput data-test="todoNameInput" placeholder="Filter by name"
-              [(ngModel)]="todoName">
+            <input matInput data-test="todoNameInput" placeholder="Filter by Owner"
+              [(ngModel)]="todoOwner">
             <mat-hint>Filtered on client</mat-hint>
           </mat-form-field>
-
-          <mat-form-field class="input-field">
-            <mat-label>Company</mat-label>
-            <input matInput data-test="todoCompanyInput" placeholder="Filter by company"
-             [(ngModel)]="todoCompany">
-            <mat-hint>Filtered on client</mat-hint>
-          </mat-form-field>
-        </div>
+          </div>
 
         <div class="flex-row gap-8 flex-wrap">
           <!-- Examples of filtering on the server -->
 
           <mat-form-field class="input-field">
-            <mat-label>Age</mat-label>
-            <input matInput data-test="todoAgeInput" type="number" placeholder="Filter by age"
-              min="0" max="200" [(ngModel)]="todoAge">
-            <mat-hint>Filtered on server</mat-hint>
+            <mat-label>Status</mat-label>
+            <input matInput data-test="todoStatusInput" type="boolean" placeholder="Filter by status"
+            [(ngModel)]="todoStatus">
+            <mat-hint>Filtered on client</mat-hint>
           </mat-form-field>
 
           <mat-form-field class="input-field">
-            <mat-label>Role</mat-label>
-            <mat-select [(ngModel)]="todoRole" data-test="todoRoleSelect">
+            <mat-label>Category</mat-label>
+            <mat-select [(ngModel)]="todoCategory" data-test="todoCategorySelect">
               <mat-option>--</mat-option>
-              <mat-option value="admin">Admin</mat-option>
-              <mat-option value="editor">Editor</mat-option>
-              <mat-option value="viewer">Viewer</mat-option>
+              <mat-option value="home work">Home Work</mat-option>
+              <mat-option value="video games">Video Games</mat-option>
+              <mat-option value="software design">Software Design</mat-option>
+              <mat-option value="groceries">Groceries</mat-option>
             </mat-select>
             <mat-hint>Filtered on server</mat-hint>
           </mat-form-field>
@@ -86,11 +80,8 @@
                     <h3 mat-subheader>Todos</h3>
                     @for (todo of filteredTodos(); track todo._id) {
                       <a mat-list-item [routerLink]="['/todos', todo._id]" class="todo-list-item">
-                        @if (todo.avatar) {
-                          <img matListItemAvatar [src]="todo.avatar" alt="Avatar for {{ todo.name }}">
-                        }
-                        <span matListItemTitle mat-line class="todo-list-name"> {{todo.name}} </span>
-                        <span matListItemLine class="todo-list-role"> {{todo.role}} </span>
+                        <span matListItemTitle mat-line class="todo-list-owner"> {{todo.owner}} </span>
+                        <span matListItemLine class="todo-list-category"> {{todo.category}} </span>
                       </a>
                     }
                   </mat-nav-list>

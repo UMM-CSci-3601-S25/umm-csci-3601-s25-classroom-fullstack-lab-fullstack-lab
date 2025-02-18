@@ -3,5 +3,7 @@ export interface Todo {
   owner: string;
   status: boolean;
   body: string;
-  category: string;
+  category: TodoCategory;
 }
+
+export type TodoCategory = 'home work' | 'video games' | 'software design' | 'groceries';
