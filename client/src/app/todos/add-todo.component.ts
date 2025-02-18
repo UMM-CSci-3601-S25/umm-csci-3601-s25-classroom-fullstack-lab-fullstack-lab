@@ -83,7 +83,7 @@ export class AddTodoComponent {
     private router: Router) {
   }
 
-  formControlHasError(controlowner: string): boolean {
+  formControlHasError(controlOwner: string): boolean {
     return this.addTodoForm.get(controlOwner).invalid &&
       (this.addTodoForm.get(controlOwner).dirty || this.addTodoForm.get(controlOwner).touched);
   }
