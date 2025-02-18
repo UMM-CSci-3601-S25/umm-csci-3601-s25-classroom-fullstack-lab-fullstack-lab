@@ -1,11 +1,7 @@
 export interface Todo {
   _id: string;
-  name: string;
-  age: number;
-  company: string;
-  email: string;
-  avatar?: string;
-  role: UserRole;
+  owner: string;
+  status: boolean;
+  body: string;
+  category: string;
 }
-
-export type UserRole = 'admin' | 'editor' | 'viewer';
