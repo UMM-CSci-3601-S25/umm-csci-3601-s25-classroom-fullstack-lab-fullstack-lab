@@ -33,6 +33,14 @@ export class TodoService {
 
 
 
+      // if(filters.category !== undefined) {
+      //   filteredTodos = filteredTodos.filter(todo => todo.category === filters.category);
+
+      // }
+
+
+
+
       // filter by body
 
 
