@@ -15,12 +15,12 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
-import { Observable } from 'rxjs';
-import { MockUserService } from '../../testing/user.service.mock';
-import { User } from './user';
-import { UserCardComponent } from './user-card.component';
-import { UserListComponent } from './user-list.component';
-import { UserService } from './user.service';
+import { Observable} from 'rxjs';
+import { MockTodoService } from '../../testing/todo.service.mock';
+import { Todo } from './todo';
+import { TodoListComponent } from './todo-list.component';
+import { TodoService } from './todo.service';
+import { TodoCardComponent } from './todo-card.component';
 
 const COMMON_IMPORTS: unknown[] = [
   FormsModule,
@@ -41,125 +41,91 @@ const COMMON_IMPORTS: unknown[] = [
   RouterModule.forRoot([]),
 ];
 
-describe('User list', () => {
-  let userList: UserListComponent;
-  let fixture: ComponentFixture<UserListComponent>;
+describe('Todo list', () => {
+  let todoList: TodoListComponent;
+  let fixture: ComponentFixture<TodoListComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [COMMON_IMPORTS, UserListComponent, UserCardComponent],
-      // providers:    [ UserService ]  // NO! Don't provide the real service!
-      // Provide a test-double instead
-      providers: [{ provide: UserService, useValue: new MockUserService() }],
+      imports: [COMMON_IMPORTS, TodoListComponent, TodoCardComponent],
+      providers: [{ provide: TodoService, useValue: new MockTodoService() }],
     });
   });
 
-  // This constructs the `userList` (declared
-  // above) that will be used throughout the tests.
   beforeEach(waitForAsync(() => {
-    // Compile all the components in the test bed
-    // so that everything's ready to go.
     TestBed.compileComponents().then(() => {
-      /* Create a fixture of the UserListComponent. That
-       * allows us to get an instance of the component
-       * (userList, below) that we can control in
-       * the tests.
-       */
-      fixture = TestBed.createComponent(UserListComponent);
-      userList = fixture.componentInstance;
-      /* Tells Angular to sync the data bindings between
-       * the model and the DOM. This ensures, e.g., that the
-       * `userList` component actually requests the list
-       * of users from the `MockUserService` so that it's
-       * up to date before we start running tests on it.
-       */
+      fixture = TestBed.createComponent(TodoListComponent);
+      todoList = fixture.componentInstance;
       fixture.detectChanges();
     });
   }));
 
-  it('contains all the users', () => {
-    expect(userList.serverFilteredUsers().length).toBe(3);
+  it('contains all the todos', () => {
+    expect(todoList.serverFilteredTodos().length).toBe(3);
   });
 
-  it("contains a user named 'Chris'", () => {
+  it("contains a todo with category 'software design'", () => {
     expect(
-      userList.serverFilteredUsers().some((user: User) => user.name === 'Chris')
+      todoList.serverFilteredTodos().some((todo: Todo) => todo.category === 'software design')
     ).toBe(true);
   });
 
-  it("contain a user named 'Jamie'", () => {
+  it("contains a todo with category 'homework'", () => {
     expect(
-      userList.serverFilteredUsers().some((user: User) => user.name === 'Jamie')
+      todoList.serverFilteredTodos().some((todo: Todo) => todo.category === 'homework')
     ).toBe(true);
   });
 
-  it("doesn't contain a user named 'Santa'", () => {
-    expect(
-      userList.serverFilteredUsers().some((user: User) => user.name === 'Santa')
-    ).toBe(false);
-  });
+  // it("doesn't contain a todo with category 'nonexistent category'", () => {
+  //   expect(
+  //     todoList.serverFilteredTodos().some((todo: Todo) => todo.category === 'nonexistent category')
+  //   ).toBe(false);
+  // });
 
-  it('has two users that are 37 years old', () => {
+  it('has two todos with status true', () => {
     expect(
-      userList.serverFilteredUsers().filter((user: User) => user.age === 37)
-        .length
+      todoList.serverFilteredTodos().filter((todo: Todo) => todo.status === true).length
     ).toBe(2);
   });
 });
 
-/*
- * This test is a little odd, but illustrates how we can use stubs
- * to create mock objects (a service in this case) that be used for
- * testing. Here we set up the mock UserService (userServiceStub) so that
- * _always_ fails (throws an exception) when you request a set of users.
- */
-describe('Misbehaving User List', () => {
-  let userList: UserListComponent;
-  let fixture: ComponentFixture<UserListComponent>;
+describe('Misbehaving Todo List', () => {
+  let todoList: TodoListComponent;
+  let fixture: ComponentFixture<TodoListComponent>;
 
-  let userServiceStub: {
-    getUsers: () => Observable<User[]>;
-    filterUsers: () => User[];
+  let todoServiceStub: {
+    getTodos: () => Observable<Todo[]>;
+    filterTodos: () => Todo[];
   };
 
   beforeEach(() => {
-    // stub UserService for test purposes
-    userServiceStub = {
-      getUsers: () =>
+    todoServiceStub = {
+      getTodos: () =>
         new Observable((observer) => {
-          observer.error('getUsers() Observer generates an error');
+          observer.error('getTodos() Observer generates an error');
         }),
-      filterUsers: () => []
+      filterTodos: () => []
     };
 
     TestBed.configureTestingModule({
-      imports: [COMMON_IMPORTS, UserListComponent],
-      // providers:    [ UserService ]  // NO! Don't provide the real service!
-      // Provide a test-double instead
-      providers: [{ provide: UserService, useValue: userServiceStub }],
+      imports: [COMMON_IMPORTS, TodoListComponent],
+      providers: [{ provide: TodoService, useValue: todoServiceStub }],
     });
   });
 
-  // Construct the `userList` used for the testing in the `it` statement
-  // below.
   beforeEach(waitForAsync(() => {
     TestBed.compileComponents().then(() => {
-      fixture = TestBed.createComponent(UserListComponent);
-      userList = fixture.componentInstance;
+      fixture = TestBed.createComponent(TodoListComponent);
+      todoList = fixture.componentInstance;
       fixture.detectChanges();
     });
   }));
 
-  it("generates an error if we don't set up a UserListService", () => {
-    // If the service fails, we expect the `serverFilteredUsers` signal to
-    // be an empty array of users.
-    expect(userList.serverFilteredUsers())
+  it("generates an error if we don't set up a TodoService", () => {
+    expect(todoList.serverFilteredTodos())
       .withContext("service can't give values to the list if it's not there")
       .toEqual([]);
-    // We also expect the `errMsg` signal to contain the "Problem contacting…"
-    // error message. (It's arguably a bit fragile to expect something specific
-    // like this; maybe we just want to expect it to be non-empty?)
-    expect(userList.errMsg())
+    expect(todoList.errMsg())
       .withContext('the error message will be')
       .toContain('Problem contacting the server – Error Code:');
   });
