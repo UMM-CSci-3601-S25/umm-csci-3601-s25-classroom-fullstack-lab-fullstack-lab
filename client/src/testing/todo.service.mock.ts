@@ -56,18 +56,5 @@ export class MockTodoService extends TodoService {
     return of(MockTodoService.testTodos);
   }
 
-  // skipcq: JS-0105
-  getUserById(id: string): Observable<Todo> {
-    // If the specified ID is for one of the first two test users,
-    // return that user, otherwise return `null` so
-    // we can test illegal user requests.
-    // If you need more, just add those in too.
-    if (id === MockTodoService.testTodos[0]._id) {
-      return of(MockTodoService.testTodos[0]);
-    } else if (id === MockTodoService.testTodos[1]._id) {
-      return of(MockTodoService.testTodos[1]);
-    } else {
-      return of(null);
-    }
-  }
+
 }

@@ -72,7 +72,7 @@ describe('TodoService', () => {
 
         const mockedMethod = spyOn(httpClient, 'get').and.returnValue(of(testTodos));
 
-        todoService.getTodos({ category:"video games" }).subscribe(() => {
+        todoService.getTodos({ category: 'video games' }).subscribe(() => {
 
           expect(mockedMethod)
             .withContext('one call')
@@ -81,7 +81,6 @@ describe('TodoService', () => {
           expect(mockedMethod)
             .withContext('talks to the correct endpoint')
             .toHaveBeenCalledWith(todoService.todoUrl, { params: new HttpParams().set('category', 'video games') });
-
         });
 
 
