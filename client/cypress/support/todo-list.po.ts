@@ -2,11 +2,16 @@
 
 export class TodoListPage {
   private readonly baseUrl = '/todos';
-  private readonly pageTitle = '.todo-list-title';
+  private readonly pageTitle = '[data-test=todoListTitle]';
   private readonly todoCardSelector = '.todo-cards-container app-todo-card';
   private readonly todoListItemsSelector = '.todo-nav-list .todo-list-item';
   private readonly profileButtonSelector = '[data-test=viewProfileButton]';
-  private readonly todoOwnerInput = '[data-test=todoOwnerInput]';
+  private readonly todo = '[data-test=todo]';
+  private readonly todoOwnerFilter = '[data-test=todoOwnerFilter]';
+  private readonly todoOwner = '[data-test=todoOwner]';
+  private readonly todoCategory = '[data-test=todoCategory]';
+
+  private readonly todoCategoryFilter = '[data-test=todoCategoryFilter]';
   private readonly radioButtonSelector = '[data-test=viewTypeRadio] mat-radio-button';
   private readonly todoRoleDropdownSelector = '[data-test=todoRoleSelect]';
   private readonly dropdownOptionSelector = 'mat-option';
@@ -26,6 +31,17 @@ export class TodoListPage {
     return cy.get(this.todoCardSelector);
   }
 
+  getVisibleTodos() {
+    return cy.get(this.todo);
+  }
+
+  getTodoOwners() {
+    return cy.get(this.todoOwner);
+  }
+
+  filterByOwner(owner: string) {
+    return cy.get(this.todoOwnerFilter).type(owner.toString());
+  }
 
   getTodoListItems() {
     return cy.get(this.todoListItemsSelector);

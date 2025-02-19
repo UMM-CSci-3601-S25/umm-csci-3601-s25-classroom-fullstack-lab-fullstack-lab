@@ -16,25 +16,28 @@ describe('Todo list', () => {
     page.getTodoTitle().should('have.text', 'Todos');
   });
 
-  it('Should show 10 todos in both card and list view', () => {
+  it('Should show 300 todos in list view', () => {
     //page.getTodoCards().should('have.length', 10);
-    page.changeView('list');
-    page.getTodoListItems().should('have.length', 10);
+    page.getVisibleTodos().should('have.length', 300);
+
   });
 
   it('Should type something in the owner filter and check that it returned correct elements', () => {
     // Filter for todo 'Fry'
-    cy.get('[data-test=todoOwnerInput]').type('Fry');
 
-    // All of the todo cards should have the owner we are filtering by
-    // page.getTodoCards().each(e => {
-    //   cy.wrap(e).find('.todo-card-owner').should('have.text', 'Fry');
-    // });
 
-    // (We check this two ways to show multiple ways to check this)
-    // page.getTodoCards().find('.todo-card-owner').each(el =>
-    //   expect(el.text()).to.equal('Fry')
-    // );
+    page.filterByOwner('Fry')
+
+    page.getVisibleTodos().should('have.lengthOf',1)
+
+     // Go through each of the visible todos that are being shown and get the owner
+
+     page.getTodoOwners()
+   //We should see these todos who owner contains Fry
+   .should('contain.text', 'Fry')
+      // We shouldn't see these todos
+      .should('not.contain.text', 'Blanche')
+      .should('not.contain.text', 'Barry')
   });
 
   it('Should type something in the category filter and check that it returned correct elements', () => {
