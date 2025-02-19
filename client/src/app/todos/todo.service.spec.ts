@@ -1,7 +1,7 @@
-import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HttpClient,HttpParams, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed} from '@angular/core/testing';
-//import { of } from 'rxjs';
+import { of } from 'rxjs';
 import { Todo } from './todo';
 import { TodoService } from './todo.service';
 
@@ -64,7 +64,32 @@ describe('TodoService', () => {
     });
 
 
-    describe('filter Todos By Status', () => {
+    describe(' about filter Todos', () => {
+
+
+      it(`filters by category`, () => {
+
+
+        const mockedMethod = spyOn(httpClient, 'get').and.returnValue(of(testTodos));
+
+        todoService.getTodos({ category:"video games" }).subscribe(() => {
+
+          expect(mockedMethod)
+            .withContext('one call')
+            .toHaveBeenCalledTimes(1);
+
+          expect(mockedMethod)
+            .withContext('talks to the correct endpoint')
+            .toHaveBeenCalledWith(todoService.todoUrl, { params: new HttpParams().set('category', 'video games') });
+
+        });
+
+
+
+
+
+      });
+
 
       it('filters by status', () => {
 
@@ -75,7 +100,7 @@ describe('TodoService', () => {
 
         filteredTodos.forEach(todo => {
           expect(todo.status).toBe(todoStatus);
-          
+
       });
 
     });

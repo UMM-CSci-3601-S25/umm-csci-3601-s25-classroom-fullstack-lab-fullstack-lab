@@ -42,6 +42,7 @@ describe('TodoCardComponent', () => {
   });
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
 
     it('should be associated with the correct user', () => {
       expect(component.todo()).toEqual(expectedTodo);
@@ -52,5 +53,4 @@ describe('TodoCardComponent', () => {
     });
 
 
-  });
 });

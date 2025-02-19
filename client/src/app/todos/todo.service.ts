@@ -19,11 +19,13 @@ export class TodoService {
     let httpParams: HttpParams = new HttpParams();
     if (filters) {
 
-
+      // filter by category
     if (filters.category !== undefined) {
       httpParams = httpParams.set('category', filters.category);
     }
   }
+
+
     return this.httpClient.get<Todo[]>(this.todoUrl, {
       params: httpParams,
 
@@ -38,29 +40,6 @@ export class TodoService {
       if (filters.status !== undefined) {
         filteredTodos = filteredTodos.filter(todo => todo.status === filters.status);
       }
-
-
-      // filter by owner
-
-
-
-
-      // filter by category
-
-
-
-
-      // if(filters.category !== undefined) {
-      //   filteredTodos = filteredTodos.filter(todo => todo.category === filters.category);
-
-      // }
-
-
-
-
-      // filter by body
-
-
 
 
 
