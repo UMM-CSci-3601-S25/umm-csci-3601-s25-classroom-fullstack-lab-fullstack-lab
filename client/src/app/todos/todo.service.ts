@@ -15,7 +15,7 @@ export class TodoService {
   }
 
   // implement getTodos
-  getTodos(filters: { category?: TodoCategory;}): Observable<Todo[]> {
+  getTodos(filters: { category?: TodoCategory; status?: boolean; body?: string;}): Observable<Todo[]> {
     let httpParams: HttpParams = new HttpParams();
     if (filters) {
 
